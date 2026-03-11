@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Data Alumni</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f4f6f9;
+margin:0;
+}
+
+.header{
+background:#0f9d8a;
+color:white;
+padding:18px 30px;
+font-size:20px;
+}
+
+.container{
+width:900px;
+margin:40px auto;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:6px;
+box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+h2{
+margin-top:0;
+color:#333;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+margin-top:20px;
+}
+
+input{
+width:100%;
+padding:10px;
+border:none;
+border-bottom:1px solid #ccc;
+font-size:14px;
+}
+
+input:focus{
+outline:none;
+border-bottom:2px solid #0f9d8a;
+}
+
+.captcha{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+}
+
+.captcha span{
+font-size:20px;
+letter-spacing:3px;
+}
+
+.refresh{
+background:#ff4b7d;
+border:none;
+color:white;
+width:40px;
+height:40px;
+border-radius:50%;
+cursor:pointer;
+font-size:18px;
+}
+
+.btn{
+margin-top:20px;
+background:#2ecc71;
+border:none;
+padding:12px 25px;
+color:white;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.btn:hover{
+background:#27ae60;
+}
+
+.result{
+margin-top:25px;
+padding:20px;
+background:#f9f9f9;
+border-radius:5px;
+display:none;
+}
+
+.result h3{
+margin-top:0;
+}
+
+.info{
+margin-top:25px;
+font-size:14px;
+color:#444;
+line-height:1.6;
+}
+
+.footer{
+background:#0f9d8a;
+color:white;
+padding:10px;
+text-align:center;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="header">
+Data Alumni
+</div>
+
+
+<div class="container">
+
+<div class="card">
+
+<h2>Masukkan data dibawah ini</h2>
+
+<div class="form-grid">
+
+<div>
+<label>NIM</label>
+<input type="text" id="nim">
+</div>
+
+<div>
+<label>Tanggal Lahir</label>
+<input type="date" id="tgl">
+</div>
+
+<div>
+<label>Hasil Penjumlahan</label>
+<input type="text" id="captchaInput">
+</div>
+
+<div>
+
+<div class="captcha">
+<span id="captcha"></span>
+<button class="refresh" onclick="generateCaptcha()">↻</button>
+</div>
+
+</div>
+
+</div>
+
+<button class="btn" onclick="cari()">Cari</button>
+
+<div id="hasil" class="result"></div>
+
+</div>
+
+
+<div class="card info">
+
+<b>Info:</b>
+
+<ol>
+<li>Pengumuman lulusan dilakukan secara bertahap.</li>
+<li>Data alumni akan disesuaikan dengan pangkalan data pendidikan tinggi.</li>
+<li>Perubahan data tidak dapat dilakukan setelah nomor ijazah diterbitkan.</li>
+<li>Perhitungan IPK merupakan gabungan dari IPK asal dan IPK tempuh.</li>
+</ol>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+Administrasi Kelulusan Sertifikat & Ijazah
+</div>
+
+
+<script>
+
+let a,b;
+
+function generateCaptcha(){
+
+a=Math.floor(Math.random()*9)+1
+b=Math.floor(Math.random()*9)+1
+
+document.getElementById("captcha").innerHTML=a+" + "+b
+
+}
+
+generateCaptcha()
+
+
+
+let database={
+
+"22012345":{
+nama:"Ahmad Fadli",
+prodi:"Hukum",
+fakultas:"FHISIP",
+tahun:"2024",
+ipk:"3.65"
+},
+
+"22067890":{
+nama:"Muhammad Rizky",
+prodi:"Manajemen",
+fakultas:"FEB",
+tahun:"2023",
+ipk:"3.72"
+}
+
+}
+
+
+
+function cari(){
+
+let nim=document.getElementById("nim").value
+let captcha=document.getElementById("captchaInput").value
+
+if(captcha!=(a+b)){
+alert("Captcha salah")
+return
+}
+
+let hasil=document.getElementById("hasil")
+
+if(database[nim]){
+
+let d=database[nim]
+
+hasil.style.display="block"
+
+hasil.innerHTML=`
+
+<h3>Data Alumni</h3>
+
+<p><b>Nama :</b> ${d.nama}</p>
+<p><b>NIM :</b> ${nim}</p>
+<p><b>Program Studi :</b> ${d.prodi}</p>
+<p><b>Fakultas :</b> ${d.fakultas}</p>
+<p><b>Tahun Lulus :</b> ${d.tahun}</p>
+<p><b>IPK :</b> ${d.ipk}</p>
+
+`
+
+}
+
+else{
+
+hasil.style.display="block"
+
+hasil.innerHTML="Data tidak ditemukan"
+
+}
+
+}
+
+</script>
+
+
+</body>
+  </html>
